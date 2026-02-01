@@ -46,7 +46,12 @@ interface User {
     permissions: string[];
 }
 
-export default function Sidebar() {
+interface SidebarProps {
+    mobile?: boolean; // If true, we are inside MobileNav
+    onClose?: () => void;
+}
+
+export default function Sidebar({ mobile, onClose }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +60,7 @@ export default function Sidebar() {
 
     const config = useAppConfig();
     const appName = config.appName;
+
 
     useEffect(() => {
         fetch('/api/auth/me')
@@ -79,17 +85,18 @@ export default function Sidebar() {
 
     return (
         <>
-            {/* Mobile Trigger */}
-            <div className="md:hidden fixed top-4 left-4 z-50">
-                <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="bg-black/50 backdrop-blur border-white/10 text-white hover:bg-white/10"
-                >
-                    {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                </Button>
-            </div>
+            {/* Mobile Trigger (Only show if NOT controlled externally) */}
+            {!mobile && (
+                <div className="md:hidden fixed top-4 left-4 z-50">
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="bg-black/50 backdrop-blur border-white/10 text-white hover:bg-white/10"
+                    >
+                        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                    </Button>
+                </div>
 
             {/* Mobile Overlay */}
             <AnimatePresence>
@@ -107,9 +114,10 @@ export default function Sidebar() {
             {/* Sidebar Content */}
             <motion.div
                 className={cn(
-                    "fixed md:relative top-0 left-0 h-full z-50 flex flex-col bg-black/80 md:bg-black/40 backdrop-blur-xl border-r border-white/5 transition-all duration-300 ease-in-out md:translate-x-0",
-                    isOpen ? "translate-x-0 w-64" : "-translate-x-full md:w-64",
-                    isCollapsed ? "md:w-20" : "md:w-64"
+                    "h-full z-50 flex flex-col bg-black/80 md:bg-black/40 backdrop-blur-xl border-r border-white/5 transition-all duration-300 ease-in-out",
+                    mobile ? "w-full" : "fixed md:relative top-0 left-0 md:translate-x-0",
+                    !mobile && (isOpen ? "translate-x-0 w-64" : "-translate-x-full md:w-64"),
+                    !mobile && (isCollapsed ? "md:w-20" : "md:w-64")
                 )}
             >
                 {/* Header */}
@@ -190,6 +198,7 @@ export default function Sidebar() {
                             <Link
                                 key={item.href}
                                 href={item.href}
+                                onClick={onClose}
                                 className={cn(
                                     "flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden",
                                     isActive
@@ -241,7 +250,7 @@ export default function Sidebar() {
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={handleLogout}
+                                onClick={() => { handleLogout(); onClose?.(); }}
                                 className="text-zinc-500 hover:text-red-400 hover:bg-red-500/10"
                                 title="Çıkış Yap"
                             >
