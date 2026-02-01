@@ -1,4 +1,8 @@
 import { config } from './config';
+import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { EventEmitter } from 'events';
 
 // Global scope to prevent losing connection on Next.js hot-reload in dev
 declare global {
