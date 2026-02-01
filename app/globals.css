@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: hsl(217 19% 27%);
+  --color-input: hsl(217 19% 27%);
+  --color-ring: hsl(221 83% 53%);
+  --color-background: hsl(222 47% 11%); /* Dark Blue BG */
+  --color-foreground: hsl(210 40% 98%);
+
+  /* Blue / Cyan Primary Theme */
+  --color-primary: hsl(199 89% 48%); /* Cyan-Blue */
+  --color-primary-foreground: hsl(210 40% 98%);
+
+  --color-secondary: hsl(217 19% 27%);
+  --color-secondary-foreground: hsl(210 40% 98%);
+
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+
+  --color-muted: hsl(217 19% 27%);
+  --color-muted-foreground: hsl(215 20% 65%);
+
+  --color-accent: hsl(217 19% 27%);
+  --color-accent-foreground: hsl(210 40% 98%);
+
+  --color-popover: hsl(222 47% 11%);
+  --color-popover-foreground: hsl(210 40% 98%);
+
+  --color-card: hsl(222 47% 11%);
+  --color-card-foreground: hsl(210 40% 98%);
+
+  --radius-lg: 0.75rem;
+  --radius-md: calc(0.75rem - 2px);
+  --radius-sm: calc(0.75rem - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-blob: blob 7s infinite;
+
+  @keyframes accordion-down {
+    from { height: 0 }
+    to { height: var(--radix-accordion-content-height) }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height) }
+    to { height: 0 }
+  }
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted); 
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted-foreground); 
+}
+
+.border-border {
+  border-color: var(--color-border);
+}

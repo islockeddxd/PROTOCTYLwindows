@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid()) 
+  username    String   @unique
+  password    String
+  role        String   @default("user")
+  isApproved  Boolean  @default(false)
+  permissions String   @default("[]")
+  createdAt   DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) 
+  username  String
+  action    String
+  details   String?
+  ipAddress String?
+  timestamp DateTime @default(now())
+}
+
+model Schedule {
+  id        String         @id @default(uuid())
+  name      String
+  cron      String
+  isActive  Boolean        @default(true)
+  lastRun   DateTime?
+  nextRun   DateTime?
+  createdAt DateTime       @default(now())
+  tasks     ScheduleTask[]
+}
+
+model ScheduleTask {
+  id           String   @id @default(uuid())
+  scheduleId   String
+  schedule     Schedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  action       String   // command, power, backup
+  payload      String?  // command to run ("say Hello") or power action ("restart")
+  sequenceBody String?  // Optional extra data
+  delay        Int      @default(0) // seconds delay
+  sequence     Int      @default(0) // order
+}
+
+model Backup {
+  id        String   @id @default(uuid())
+  name      String
+  path      String
+  size      String
+  createdAt DateTime @default(now())
+}
