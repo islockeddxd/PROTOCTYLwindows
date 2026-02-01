@@ -97,6 +97,7 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
                         {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                     </Button>
                 </div>
+            )}
 
             {/* Mobile Overlay */}
             <AnimatePresence>
