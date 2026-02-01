@@ -406,7 +406,7 @@ export default function FileManager() {
         Swal.fire({ title: 'Başarılı', icon: 'success', text: 'Dosyalar ayıklandı.', timer: 1500, showConfirmButton: false, background: '#18181b', color: '#fff' });
       } else throw new Error();
     } catch {
-      Swal.fire('Hata', 'Ayıklama başarısız', 'error', '#18181b');
+      Swal.fire({ title: 'Hata', text: 'Ayıklama başarısız', icon: 'error', background: '#18181b', color: '#fff' });
     }
   };
 
@@ -424,7 +424,7 @@ export default function FileManager() {
         Swal.fire({ title: 'Başarılı', icon: 'success', text: 'Arşiv oluşturuldu.', timer: 1500, showConfirmButton: false, background: '#18181b', color: '#fff' });
       } else throw new Error();
     } catch {
-      Swal.fire('Hata', 'Paketleme başarısız', 'error', '#18181b');
+      Swal.fire({ title: 'Hata', text: 'Paketleme başarısız', icon: 'error', background: '#18181b', color: '#fff' });
     }
   };
 
