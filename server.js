@@ -1,3 +1,8 @@
+// Force production logic
+if (process.argv.includes('production')) {
+  process.env.NODE_ENV = 'production';
+}
+
 const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
