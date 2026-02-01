@@ -17,13 +17,15 @@ export interface AppConfig {
     isSetupComplete: boolean;
 }
 
+import path from 'path';
+
 function getConfig(): AppConfig {
     return {
         appName: process.env.APP_NAME || 'Atherise Panel',
         appUrl: process.env.APP_URL || 'http://localhost:3000',
         themeColor: process.env.THEME_COLOR || 'blue',
         jwtSecret: process.env.JWT_SECRET || 'super-secret-key-change-this-later',
-        serverRoot: process.env.SERVER_ROOT || 'C:\\Users\\Administrator\\Desktop\\Atherise',
+        serverRoot: process.env.SERVER_ROOT || path.join(process.cwd(), 'server'),
         databaseUrl: process.env.DATABASE_URL || 'file:./dev.db',
         isSetupComplete: process.env.SETUP_COMPLETE === 'true',
     };

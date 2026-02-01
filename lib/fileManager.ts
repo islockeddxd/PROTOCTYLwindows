@@ -15,6 +15,18 @@ export function getSafePath(targetPath: string) {
 
 export async function listFiles(dir: string = '') {
   const fullPath = getSafePath(dir);
+
+  try {
+    await fs.access(fullPath);
+  } catch {
+    // If directory doesn't exist, create it (only if it's the root or we want to be safe)
+    try {
+      await fs.mkdir(fullPath, { recursive: true });
+    } catch (err) {
+      throw new Error(`Directory could not be created: ${fullPath}`);
+    }
+  }
+
   const items = await fs.readdir(fullPath, { withFileTypes: true });
 
   const files = await Promise.all(items.map(async (item) => {
