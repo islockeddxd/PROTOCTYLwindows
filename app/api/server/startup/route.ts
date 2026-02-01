@@ -8,7 +8,7 @@ import { jwtVerify } from 'jose';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-const SECRET_KEY = new TextEncoder().encode('super-secret-key-change-this-later');
+const SECRET_KEY = new TextEncoder().encode(config.jwtSecret);
 import { config } from '@/lib/config';
 
 // Start.bat artık serverRoot içinde aranacak

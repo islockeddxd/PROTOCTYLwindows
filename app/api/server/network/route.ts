@@ -6,7 +6,7 @@ import { jwtVerify } from 'jose';
 import { config } from '@/lib/config';
 
 const execAsync = util.promisify(exec);
-const SECRET_KEY = new TextEncoder().encode('super-secret-key-change-this-later');
+const SECRET_KEY = new TextEncoder().encode(config.jwtSecret);
 
 async function isAdmin() {
   const session = (await cookies()).get('session')?.value;
