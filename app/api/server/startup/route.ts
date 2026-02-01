@@ -9,7 +9,10 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const SECRET_KEY = new TextEncoder().encode('super-secret-key-change-this-later');
-const START_BAT_PATH = path.join(process.env.USERPROFILE || 'C:\\Users\\Administrator', 'Desktop', 'Atherise', 'start.bat');
+import { config } from '@/lib/config';
+
+// Start.bat artık serverRoot içinde aranacak
+const START_BAT_PATH = path.join(config.serverRoot, 'start.bat');
 
 async function checkPermission(perm: string) {
   const session = (await cookies()).get('session')?.value;
@@ -17,7 +20,7 @@ async function checkPermission(perm: string) {
   try {
     const { payload } = await jwtVerify(session, SECRET_KEY);
     const userPerms = (payload.permissions as string[]) || [];
-    return payload.role === 'ADMIN' || userPerms.includes(perm);
+    return payload.role === 'admin' || userPerms.includes(perm);
   } catch {
     return false;
   }

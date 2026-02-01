@@ -3,15 +3,15 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { 
-  FolderOpen, 
-  Settings, 
-  TerminalSquare, 
-  Globe, 
-  LogOut, 
-  ShieldAlert, 
-  Server, 
-  X, 
+import {
+  FolderOpen,
+  Settings,
+  TerminalSquare,
+  Globe,
+  LogOut,
+  ShieldAlert,
+  Server,
+  X,
   Archive,
   Cpu // Startup icon
 } from 'lucide-react';
@@ -35,7 +35,7 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [serverIcon, setServerIcon] = useState<string | null>(null);
-  
+
   const [user, setUser] = useState<{ role: string, permissions: string[] } | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -56,9 +56,9 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
 
     fetch('/api/server/icon')
       .then(res => {
-        if(res.ok) setServerIcon('/api/server/icon');
+        if (res.ok) setServerIcon('/api/server/icon');
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const handleLogout = () => {
@@ -84,7 +84,7 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
       mobile ? "w-full shadow-none" : "w-72 shadow-2xl"
     )}>
       {mobile && (
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
         >
@@ -102,7 +102,7 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
             )}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Atherise</h1>
+            <h1 className="text-xl font-bold text-white tracking-tight">{config.appName}</h1>
             <p className="text-xs text-slate-400 font-medium">Yönetim Paneli</p>
           </div>
         </div>
@@ -110,7 +110,7 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
 
       <div className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
         <p className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Sunucu Kontrolü</p>
-        
+
         {navItems.map((item) => {
           if (!hasPermission(item.permission)) return null;
 
@@ -122,8 +122,8 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
               onClick={onClose}
               className={clsx(
                 'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group',
-                isActive 
-                  ? 'bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.15)] border border-cyan-500/20' 
+                isActive
+                  ? 'bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.15)] border border-cyan-500/20'
                   : 'text-slate-400 hover:bg-white/5 hover:text-slate-200 border border-transparent'
               )}
             >
@@ -154,7 +154,7 @@ export default function Sidebar({ mobile, onClose }: SidebarProps) {
       </div>
 
       <div className="p-4 border-t border-white/5 bg-black/20">
-        <button 
+        <button
           onClick={handleLogout}
           className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-red-500/10 hover:text-red-400 text-slate-400 transition-colors group border border-transparent hover:border-red-500/20"
         >

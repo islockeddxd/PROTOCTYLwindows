@@ -64,6 +64,7 @@ export async function DELETE(request: Request) {
 
   try {
     const { port } = await request.json();
+    const { port, description } = await request.json(); // Added description for specific deletion
     // Delete rule by name pattern (Risky if multiple rules match, usually we delete by exact name)
     // Here we need to know the exact name.
     // Ideally we store rule names in DB.
@@ -75,7 +76,13 @@ export async function DELETE(request: Request) {
     // Let's assume the user provides the rule name or we enforce a strict naming convention.
     // For this demo, let's just try to delete `Atherise Allocation ${port}*` (wildcard delete not supported by netsh easily)
 
-    // Simplified: Delete rule "Atherise Allocation {port}" (User must be careful)
+    // Simplified deletion
+    // Note: Deleting by name prefix is tricky without loop. For now specific logic.
+    // If description is provided, try to delete by exact name
+    if (description) {
+      await execAsync(`netsh advfirewall firewall delete rule name="${config.appName} Allocation ${port} - ${description}"`);
+    }
+    // Fallback or additional deletion: delete all rules for that port
     const command = `netsh advfirewall firewall delete rule name=all protocol=TCP localport=${port}`;
     await execAsync(command);
 

@@ -154,7 +154,7 @@ export default function SetupPage() {
                     value={config.appName}
                     onChange={(e) => setConfig({ ...config, appName: e.target.value })}
                     className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition"
-                    placeholder="Örn: Atherise Panel"
+                    placeholder="Örn: Game Panel"
                   />
                 </div>
                 <div className="border-2 border-dashed border-white/10 rounded-lg p-6 text-center hover:border-indigo-500/50 transition cursor-pointer bg-black/10"
