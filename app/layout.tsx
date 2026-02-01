@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: config.appName || "Panel",
   description: "Advanced Server Management",
   icons: {
-    icon: "/logo.png",
+    icon: "/api/server/icon",
   },
 };
 
