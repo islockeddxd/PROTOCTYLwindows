@@ -20,14 +20,15 @@ async function checkPermission(perm: string) {
   try {
     const { payload } = await jwtVerify(session, SECRET_KEY);
     const userPerms = (payload.permissions as string[]) || [];
-    return payload.role === 'admin' || userPerms.includes(perm);
+    const userRole = (payload.role as string || '').toLowerCase();
+    return userRole === 'admin' || userPerms.includes(perm) || userPerms.includes('settings');
   } catch {
     return false;
   }
 }
 
 export async function GET() {
-  if (!(await checkPermission('settings'))) return NextResponse.json({ error: 'Yetkisiz' }, { status: 403 });
+  if (!(await checkPermission('startup'))) return NextResponse.json({ error: 'Yetkisiz' }, { status: 403 });
 
   try {
     const content = await fs.readFile(START_BAT_PATH, 'utf-8');
@@ -50,7 +51,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!(await checkPermission('settings'))) return NextResponse.json({ error: 'Access Denied' }, { status: 403 });
+  if (!(await checkPermission('startup'))) return NextResponse.json({ error: 'Access Denied' }, { status: 403 });
 
   try {
     const body = await request.json();
