@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { config } from '@/lib/config';
 
-export async function GET() {
+export async function GET(request: Request) {
   const iconPath = path.join(config.serverRoot, 'server-icon.png');
 
   if (fs.existsSync(iconPath)) {
@@ -11,11 +11,11 @@ export async function GET() {
     return new NextResponse(imageBuffer, {
       headers: {
         'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=3600'
+        'Cache-Control': 'no-store, must-revalidate' // Prevent aggressive caching during changes
       }
     });
   } else {
-    // Return a default SVG placeholder or 404
-    return new NextResponse(null, { status: 404 });
+    // Fallback to default public icon
+    return NextResponse.redirect(new URL('/globe.svg', request.url));
   }
 }
