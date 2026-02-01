@@ -18,7 +18,7 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(3000, '0.0.0.0', () => {
     console.log('--------------------------------------------------');
-    console.log('> Atherise Panel http://localhost:3000 adresinde aktif!');
+    console.log('> Panel http://localhost:3000 adresinde aktif!');
     console.log('--------------------------------------------------');
   });
 });

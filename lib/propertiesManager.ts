@@ -1,7 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-const PROPERTIES_PATH = path.join(process.env.USERPROFILE || 'C:\\Users\\Administrator', 'Desktop', 'Atherise', 'server.properties');
+import { config } from '@/lib/config';
+
+const PROPERTIES_PATH = path.join(config.serverRoot, 'server.properties');
 
 export async function getProperties() {
   try {
@@ -14,7 +16,7 @@ export async function getProperties() {
       if (trimmed && !trimmed.startsWith('#')) {
         const [key, ...values] = trimmed.split('=');
         if (key) {
-           properties[key.trim()] = values.join('=').trim();
+          properties[key.trim()] = values.join('=').trim();
         }
       }
     });
