@@ -3,7 +3,7 @@ import path from 'path';
 import AdmZip from 'adm-zip';
 import { config } from '@/lib/config';
 
-const SERVER_ROOT = config.serverRoot;
+const SERVER_ROOT = path.resolve(config.serverRoot);
 
 export function getSafePath(targetPath: string) {
   const resolvedPath = path.resolve(SERVER_ROOT, targetPath);

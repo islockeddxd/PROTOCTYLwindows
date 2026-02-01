@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
-import { config as appConfig } from '@/lib/config';
-
-const SECRET_KEY = new TextEncoder().encode(appConfig.jwtSecret);
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET || 'super-secret-key-change-this-later');
 
 function isSetupComplete(): boolean {
-  return appConfig.isSetupComplete;
+  return process.env.SETUP_COMPLETE === 'true';
 }
 
 export async function middleware(request: NextRequest) {
