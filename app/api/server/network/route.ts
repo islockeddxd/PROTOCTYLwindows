@@ -3,6 +3,7 @@ import { exec } from 'child_process';
 import util from 'util';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
+import { config } from '@/lib/config';
 
 const execAsync = util.promisify(exec);
 const SECRET_KEY = new TextEncoder().encode('super-secret-key-change-this-later');
@@ -63,8 +64,7 @@ export async function DELETE(request: Request) {
   if (!(await isAdmin())) return NextResponse.json({ error: 'Access Denied' }, { status: 403 });
 
   try {
-    const { port } = await request.json();
-    const { port, description } = await request.json(); // Added description for specific deletion
+    const { port, description } = await request.json();
     // Delete rule by name pattern (Risky if multiple rules match, usually we delete by exact name)
     // Here we need to know the exact name.
     // Ideally we store rule names in DB.
